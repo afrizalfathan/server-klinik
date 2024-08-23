@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const { PORT } = require("./config/env");
 const { sequelize } = require("./config/db_conn");
 
 const antrianRoutes = require("./routes/antrian_routes");
@@ -15,7 +14,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.ORIGIN_CORS,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -33,7 +32,7 @@ sequelize
   .then(() => {
     console.log("DB Connected!");
     // // Sinkronisasi model dengan database
-    // return sequelize.sync({ alter: true }); // `alter: true` untuk memperbarui tabel yang ada sesuai model
+    return sequelize.sync({ alter: true }); // `alter: true` untuk memperbarui tabel yang ada sesuai model
   })
   .then(() => {
     console.log("Tables have been synced!");
@@ -46,6 +45,6 @@ app.use("/user", userRoutes);
 app.use("/konsul", konsulRoutes);
 app.use("/email_routes", emailRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server running on port ${process.env.PORT}`);
 });

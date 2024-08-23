@@ -1,6 +1,5 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const { SECRET_KEY } = require("../config/env");
 const User = require("../models/user_models");
 
 const router = express.Router();
@@ -14,7 +13,7 @@ router.post("/login_handler", async (req, res) => {
     if (user) {
       const accessToken = jwt.sign(
         { username: user.username, role: user.role },
-        SECRET_KEY,
+        process.env.SECRET_KEY,
         { expiresIn: "1h" }
       );
       res.json({ accessToken, user });

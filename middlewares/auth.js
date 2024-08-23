@@ -1,11 +1,10 @@
 const jwt = require("jsonwebtoken");
-const { SECRET_KEY } = require("../config/env");
 
 const authenticateJWT = (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
 
   if (token) {
-    jwt.verify(token, SECRET_KEY, (err, user) => {
+    jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
       if (err) {
         return res.sendStatus(403);
       }
