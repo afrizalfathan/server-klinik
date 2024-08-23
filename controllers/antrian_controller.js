@@ -142,6 +142,33 @@ async function sortAntrian(shift, tanggal) {
   }
 }
 
+async function getTotalAntrianHariIni() {
+  try {
+    const today = new Date().toISOString().split("T")[0];
+    const result = await Antrian.findAll({ where: { tanggal: today } });
+    return result;
+  } catch (error) {
+    console.error("Error fetching total queues for today:", error);
+    throw error;
+  }
+}
+
+// Function to get the number of queues for a specific shift today
+async function getAntrianShiftHariIni(shift) {
+  try {
+    const today = new Date().toISOString().split("T")[0];
+    const shiftCondition =
+      shift === 1 ? "Shift 1 : 06.30 - 8.30" : "Shift 2 : 16.30 - 19.30";
+    const result = await Antrian.findAll({
+      where: { shift: shiftCondition, tanggal: today },
+    });
+    return result;
+  } catch (error) {
+    console.error(`Error fetching queues for shift ${shift} today:`, error);
+    throw error;
+  }
+}
+
 module.exports = {
   createAntrian,
   readSingleAntrian,
@@ -150,4 +177,6 @@ module.exports = {
   updateAntrianStatus,
   deleteAntrian,
   sortAntrian,
+  getTotalAntrianHariIni,
+  getAntrianShiftHariIni,
 };

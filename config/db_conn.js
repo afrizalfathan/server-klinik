@@ -1,8 +1,13 @@
 const { Sequelize, DataTypes } = require("sequelize");
-const sequelize = new Sequelize("klinik", "root", "", {
-  host: "localhost",
-  dialect: "mysql",
-  logging: console.log,
-});
+const sequelize = new Sequelize(
+  process.env.DB_DATABASE,
+  process.env.DB_USER,
+  "",
+  {
+    host: process.env.DB_HOST,
+    dialect: process.env.DB_DIALECT,
+    logging: console.log,
+  }
+);
 
 module.exports = { sequelize, DataTypes, Sequelize };

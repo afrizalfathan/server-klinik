@@ -8,6 +8,8 @@ const {
   updateAntrianStatus,
   deleteAntrian,
   sortAntrian,
+  getTotalAntrianHariIni,
+  getAntrianShiftHariIni,
 } = require("../controllers/antrian_controller");
 
 const router = express.Router();
@@ -120,6 +122,36 @@ router.get("/shift/:shift/:tanggal", async (req, res) => {
     res.json(antrian);
   } catch (error) {
     res.status(500).json({ error: "Error fetching queue data" });
+  }
+});
+
+// Route to get the total number of queues for today
+router.get("/total_queues_today", async (req, res) => {
+  try {
+    const totalQueues = await getTotalAntrianHariIni();
+    res.status(200).send(totalQueues);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Route to get the number of queues for shift 1 today
+router.get("/shift1_queues_today", async (req, res) => {
+  try {
+    const shift1Queues = await getAntrianShiftHariIni(1);
+    res.status(200).send(shift1Queues);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Route to get the number of queues for shift 2 today
+router.get("/shift2_queues_today", async (req, res) => {
+  try {
+    const shift2Queues = await getAntrianShiftHariIni(2);
+    res.json({ shift2Queues });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 
