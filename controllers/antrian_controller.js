@@ -74,6 +74,7 @@ async function readAllAntrian() {
           attributes: ["nama", "no_hp", "email", "jenis_kelamin"],
         },
       ],
+      order: [["antrian", "asc"]],
     });
   } catch (error) {
     console.log(error);

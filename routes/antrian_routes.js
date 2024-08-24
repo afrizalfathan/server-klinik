@@ -115,7 +115,7 @@ router.delete(
 router.get("/shift/:shift/:tanggal", async (req, res) => {
   const { shift, tanggal } = req.params;
   const shiftHandler =
-    shift === "1" ? "Shift 1 : 06.30 - 8.30" : "Shift 2 : 16.30 - 19.30";
+    shift === "1" ? "Shift 1 : 06.30 - 08.30" : "Shift 2 : 16.30 - 19.30";
   console.log(shiftHandler);
   try {
     const antrian = await sortAntrian(shiftHandler, tanggal);
@@ -149,7 +149,7 @@ router.get("/shift1_queues_today", async (req, res) => {
 router.get("/shift2_queues_today", async (req, res) => {
   try {
     const shift2Queues = await getAntrianShiftHariIni(2);
-    res.json({ shift2Queues });
+    res.status(200).send(shift2Queues);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
