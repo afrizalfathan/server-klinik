@@ -31,8 +31,7 @@ sequelize
   .authenticate()
   .then(() => {
     console.log("DB Connected!");
-    // // Sinkronisasi model dengan database
-    // return sequelize.sync({ alter: true }); // `alter: true` untuk memperbarui tabel yang ada sesuai model
+    return sequelize.sync({ alter: true }); // `alter: true` untuk memperbarui tabel yang ada sesuai model
   })
   .then(() => {
     console.log("Tables have been synced!");
