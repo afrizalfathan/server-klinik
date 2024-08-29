@@ -92,6 +92,12 @@ async function readSingleAntrian(id) {
         },
       ],
     });
+    
+    // Cek jika antrian tidak ditemukan
+    if (!antrian) {
+      throw new Error("Data tidak ditemukan");
+    }
+    
     return antrian;
   } catch (error) {
     console.log(error);
