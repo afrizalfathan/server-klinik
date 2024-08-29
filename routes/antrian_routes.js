@@ -55,6 +55,12 @@ router.post("/create_queue", async (req, res) => {
 router.get("/read_data/:id", async (req, res) => {
   try {
     const result = await readSingleAntrian(req.params.id);
+
+    // Cek jika result kosong atau tidak ada data
+    if (!result) {
+      return res.status(404).send({ error: "Data tidak ditemukan" });
+    }
+
     res.send([result]);
   } catch (error) {
     console.log(error);
